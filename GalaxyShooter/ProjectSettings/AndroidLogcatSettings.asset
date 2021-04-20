@@ -3,8 +3,8 @@
     "m_SelectedPackage": {
         "deviceId": "H9AXB7725642GZV",
         "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 9577,
-        "exited": true
+        "processId": 13542,
+        "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
@@ -13,6 +13,12 @@
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 9577,
             "exited": true
+        },
+        {
+            "deviceId": "H9AXB7725642GZV",
+            "name": "com.DefaultCompany.com.unity.template.mobile2D",
+            "processId": 13542,
+            "exited": false
         }
     ],
     "m_Tags": {

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private PausePanelController m_Pause;
 	[SerializeField] private GameOverPanelController m_GameOver;
 	[SerializeField] private WaveData[] m_Waves;
+	[SerializeField] private GameObject m_nextLevel;
 
 	private bool m_win;//check win
 	private int m_score; //score final when you play
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
 		m_GamePlay.gameObject.SetActive(false);
 		m_Pause.gameObject.SetActive(false);
 		m_GameOver.gameObject.SetActive(false);
+		m_nextLevel.SetActive(false);
 		SetState(GameState.Home);
 	}
 
@@ -91,17 +93,27 @@ public class GameManager : MonoBehaviour
 		//m_GamePlay.displayScore(m_score);
 		if (SpawnManager.Instance.isClear())
 		{
+			showNextPanel(true);
 			m_curWaveIndex++;
 			if(m_curWaveIndex >= m_Waves.Length)
 				Gameover(true);//You win
 			else
 			{
+				Debug.Log("A");
+				showNextPanel(false);
 				WaveData wave = m_Waves[m_curWaveIndex];
 				SpawnManager.Instance.StartBatter(wave,false);
 			}
 		}
 	}
-	
+	public void showNextPanel(bool show)
+	{
+		if (show==true)
+			m_nextLevel.SetActive(true);
+		else
+			m_nextLevel.SetActive(false);
+	}
+
 	//kiem tra trang thai Active khi player di chuyen
 	public bool isActive()
 	{
