@@ -4925,6 +4925,7 @@ MonoBehaviour:
   m_MaxFiringCoolDown: 6
   m_hp: 3
   m_currentHp: 0
+  ScoreEnenmy: 10
 --- !u!50 &1680755238852557663
 Rigidbody2D:
   serializedVersion: 4

@@ -4945,9 +4945,8 @@ MonoBehaviour:
   m_ProjectTile: {fileID: 6257887975840909876, guid: 16dd3a9266e5a274dafc7c2e56e65031, type: 3}
   m_FiringPoint: {fileID: 9216605866267650424}
   m_FiringCoolDown: 0.1
-  m_hp: 3
+  m_hp: 5
   m_currentHp: 0
-  m_SpawnManager: {fileID: 0}
 --- !u!50 &1014869641
 Rigidbody2D:
   serializedVersion: 4
