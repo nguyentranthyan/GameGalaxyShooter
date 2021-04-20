@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,8 +20,66 @@ public class PlayerController : MonoBehaviour
 	//private SpawnManager m_SpawnManager;
 	private AudioManager m_AudioManager;
 
-    // Start is called before the first frame update
-    void Start()
+	//check NewInput
+	[SerializeField] private bool m_UseNewInputSystem;
+	private PlayerInput m_PlayerInput;
+	private Vector2 m_MovementInputValue;
+	private bool m_AttackInputValue;
+
+	private void OnEnable()
+	{
+		if (m_PlayerInput == null)
+		{
+			m_PlayerInput = new PlayerInput();
+			m_PlayerInput.Player.Movement.started += OnMovement;
+			m_PlayerInput.Player.Movement.started += OnMovement;
+			m_PlayerInput.Player.Movement.started += OnMovement;
+			m_PlayerInput.Player.Attack.started += OnAttack;
+			m_PlayerInput.Player.Attack.started += OnAttack;
+			m_PlayerInput.Player.Attack.started += OnAttack;
+			m_PlayerInput.Enable();
+		}
+	}
+
+	private void OnDisable()
+	{
+		m_PlayerInput.Disable();
+	}
+
+	private void OnAttack(InputAction.CallbackContext obj)
+	{
+		if (obj.started)
+		{
+			m_AttackInputValue = true;
+		}
+		else if (obj.performed)
+		{
+			m_AttackInputValue = true;
+		}
+		else if (obj.canceled)
+		{
+			m_AttackInputValue = false;
+		}
+	}
+
+	private void OnMovement(InputAction.CallbackContext obj)
+	{
+		if (obj.started)
+		{
+			m_MovementInputValue = obj.ReadValue<Vector2>();
+		}
+		else if (obj.performed)
+		{
+			m_MovementInputValue = obj.ReadValue<Vector2>();
+		}
+		else if (obj.canceled)
+		{
+			m_MovementInputValue = Vector2.zero;
+		}
+	}
+
+	// Start is called before the first frame update
+	void Start()
     {
 		m_currentHp = m_hp;
 		if (onHPChange != null)
@@ -36,21 +95,37 @@ public class PlayerController : MonoBehaviour
 		//if (!m_gameManager.isActive())
 		if (!GameManager.Instance.isActive())
 			return;
-		float horizontal = Input.GetAxis("Horizontal");
-		float vertical = Input.GetAxis("Vertical");
 
-		//huong di chuyen
-		Vector2 direction = new Vector2(horizontal, vertical);
-		transform.Translate(direction * Time.deltaTime * m_MoveSpeed);
-
-		if (Input.GetKey(KeyCode.Space))
+		Vector2 direction=Vector2.zero;
+		if (!m_UseNewInputSystem)
 		{
-			if (m_TempCoolDown <= 0)
+			float horizontal = Input.GetAxis("Horizontal");
+			float vertical = Input.GetAxis("Vertical");
+			//huong di chuyen
+			direction = new Vector2(horizontal, vertical);
+			if (Input.GetKey(KeyCode.Space))
 			{
-				Fire();
-				m_TempCoolDown = m_FiringCoolDown;
+				if (m_TempCoolDown <= 0)
+				{
+					Fire();
+					m_TempCoolDown = m_FiringCoolDown;
+				}
 			}
 		}
+		else
+		{
+			direction = m_MovementInputValue;
+			if (m_AttackInputValue)
+			{
+				if (m_TempCoolDown <= 0)
+				{
+					Fire();
+					m_TempCoolDown = m_FiringCoolDown;
+				}
+			}
+		}
+	
+		transform.Translate(direction * Time.deltaTime * m_MoveSpeed);
 		m_TempCoolDown -= Time.deltaTime;
 	}
 
@@ -83,5 +158,13 @@ public class PlayerController : MonoBehaviour
 		}
 		//player bi va cham
 		m_AudioManager.PlayHitSFXClip();
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.collider.CompareTag("Wall"))
+		{
+
+		}
 	}
 }

@@ -4947,6 +4947,7 @@ MonoBehaviour:
   m_FiringCoolDown: 0.1
   m_hp: 5
   m_currentHp: 0
+  m_UseNewInputSystem: 1
 --- !u!50 &1014869641
 Rigidbody2D:
   serializedVersion: 4
@@ -4977,7 +4978,7 @@ PolygonCollider2D:
   m_GameObject: {fileID: 9216605867647039834}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: be913b289ef3c5d4497776e28be01b8c, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
