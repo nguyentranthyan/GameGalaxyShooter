@@ -17,14 +17,11 @@ public class CameraFollow : MonoBehaviour
 
 	void LateUpdate()
 	{
-
 		transform.position = player.transform.position + offset;
-
 		transform.position = new Vector3(
-		Mathf.Clamp(transform.position.x, xMin, xMax),
-		Mathf.Clamp(transform.position.y, yMin, yMax),
-		transform.position.z
-
+			Mathf.Clamp(transform.position.x, xMin, xMax),
+			Mathf.Clamp(transform.position.y, yMin, yMax),
+			transform.position.z
 		);
 
 	}

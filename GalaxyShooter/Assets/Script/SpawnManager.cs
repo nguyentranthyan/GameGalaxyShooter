@@ -1,174 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[System.Serializable]
-public class EnemiesPool
-{
-	public  EnemyController m_EnemyPrefabs;
-	public List<EnemyController> inActiveobjs; //chua cac danh sach enemy da chet hoac chua su dung
-	public List<EnemyController> activeobjs; //chua cac danh sach enemy dang su dung
-
-	//spawn cac obj when using
-	public EnemyController spawn(Vector3 position,Transform parent)
-	{
-		if (inActiveobjs.Count == 0)
-		{
-			EnemyController newObj = GameObject.Instantiate(m_EnemyPrefabs, parent);
-			newObj.transform.position = position;
-			activeobjs.Add(newObj);
-			return newObj;
-		}
-		else
-		{
-			EnemyController oldObj = inActiveobjs[0];
-			oldObj.gameObject.SetActive(true);
-			oldObj.transform.SetParent(parent);
-			oldObj.transform.position = position;
-			activeobjs.Add(oldObj);
-			inActiveobjs.RemoveAt(0);
-			return oldObj;
-		}
-	}
-
-	public void release(EnemyController obj)
-	{
-		if (activeobjs.Contains(obj))
-		{
-			activeobjs.Remove(obj);
-			inActiveobjs.Add(obj);
-			obj.gameObject.SetActive(false);
-		}
-	}
-
-	//xoa cac ativeobj 
-	public void Clear()
-	{
-		while (activeobjs.Count > 0)
-		{
-			EnemyController obj = activeobjs[0];
-			obj.gameObject.SetActive(false);
-			activeobjs.RemoveAt(0);
-			inActiveobjs.Add(obj);
-		}
-	}
-}
-[System.Serializable]
-public class ProjectTilePool
-{
-	public ProjecTileController m_projectTilePrefabs;
-	public List<ProjecTileController> inActiveobjs; //chua cac danh sach enemy da chet hoac chua su dung
-	public List<ProjecTileController> activeobjs; //chua cac danh sach enemy dang su dung
-
-	//spawn cac obj when using
-	public ProjecTileController spawn(Vector3 position, Transform parent)
-	{
-		if (inActiveobjs.Count == 0)
-		{
-			ProjecTileController newObj = GameObject.Instantiate(m_projectTilePrefabs, parent);
-			newObj.transform.position = position;
-			activeobjs.Add(newObj);
-			return newObj;
-		}
-		else
-		{
-			ProjecTileController oldObj = inActiveobjs[0];
-			oldObj.gameObject.SetActive(true);
-			oldObj.transform.SetParent(parent);
-			oldObj.transform.position = position;
-			activeobjs.Add(oldObj);
-			inActiveobjs.RemoveAt(0);
-			return oldObj;
-		}
-	}
-
-	public void release(ProjecTileController obj)
-	{
-		if (activeobjs.Contains(obj))
-		{
-			activeobjs.Remove(obj);
-			inActiveobjs.Add(obj);
-			obj.gameObject.SetActive(false);
-		}
-	}
-	//xoa cac ativeobj 
-	public void Clear()
-	{
-		while (activeobjs.Count > 0)
-		{
-			ProjecTileController obj = activeobjs[0];
-			obj.gameObject.SetActive(false);
-			activeobjs.RemoveAt(0);
-			inActiveobjs.Add(obj);
-		}
-	}
-}
-
-[System.Serializable]
-public class ParticleFXcontroller
-{
-	public ParticleFX m_ParticleFXPrefabs;
-	public List<ParticleFX> inActiveobjs; //chua cac danh sach enemy da chet hoac chua su dung
-	public List<ParticleFX> activeobjs; //chua cac danh sach enemy dang su dung
-
-	//spawn cac obj when using
-	public ParticleFX spawn(Vector3 position, Transform parent)
-	{
-		if (inActiveobjs.Count == 0)
-		{
-			ParticleFX newObj = GameObject.Instantiate(m_ParticleFXPrefabs, parent);
-			newObj.transform.position = position;
-			activeobjs.Add(newObj);
-			return newObj;
-		}
-		else
-		{
-			ParticleFX oldObj = inActiveobjs[0];
-			oldObj.gameObject.SetActive(true);
-			oldObj.transform.SetParent(parent);
-			oldObj.transform.position = position;
-			activeobjs.Add(oldObj);
-			inActiveobjs.RemoveAt(0);
-			return oldObj;
-		}
-	}
-
-	public void release(ParticleFX obj)
-	{
-		if (activeobjs.Contains(obj))
-		{
-			activeobjs.Remove(obj);
-			inActiveobjs.Add(obj);
-			obj.gameObject.SetActive(false);
-		}
-	}
-
-	//xoa cac ativeobj 
-	public void Clear()
-	{
-		while (activeobjs.Count > 0)
-		{
-			ParticleFX obj = activeobjs[0];
-			obj.gameObject.SetActive(false);
-			activeobjs.RemoveAt(0);
-			inActiveobjs.Add(obj);
-		}
-	}
-}
-
 public class SpawnManager : MonoBehaviour
 {
 	[SerializeField] private bool m_Active;
 
-	//[SerializeField] private EnemyController m_EnemyPrefabs;
+	[Header("Pooling Object variables")]
 	[SerializeField] private PlayerController m_PlayerControllerPrefabs;
 	[SerializeField] private EnemiesPool m_EnemiesPool;
 	[SerializeField] private ProjectTilePool m_EnemyProjectTilePool;
 	[SerializeField] private ProjectTilePool m_PlayerProjectTilePool;
-	[SerializeField] private ParticleFXcontroller m_hitFxPool;
-	[SerializeField] private ParticleFXcontroller m_shooterFxPool;
-	[SerializeField] private ParticleFXcontroller m_ExplosionFXsPool;
+	[SerializeField] private ParticleFXPool m_hitFxPool;
+	[SerializeField] private ParticleFXPool m_ExplosionFXsPlayerPool;
+	[SerializeField] private ParticleFXPool m_ExplosionFXsPool;
 
+	[Header("Enemy's Path Manager variables")]
 	[SerializeField] private EnemyPath[] m_EnemyPath;
 	[SerializeField] private int m_MinTotalEnemies;
 	[SerializeField] private int m_MaxTotalEnemies;
@@ -176,12 +22,16 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField] private int m_tolalgroup;
 	[SerializeField] private float m_EnemySpawnInterval;
 
-	private PlayerController m_Player;
-	public PlayerController Player => m_Player;//get m_player
-	private bool m_IsSpawningEnemies;//kiem tra sao Enemy 
+	[Header("Player's Path Manager variables")]
+	public PlayerController m_Player;
+
+	//kiem tra spawn Enemy 
+	private bool m_IsSpawningEnemies;
 	private WaveData m_curWave;
-	//using singleton
-	private static SpawnManager m_Isntance;//global variable
+
+	#region singleton
+	[Header("Golbal variables")]
+	private static SpawnManager m_Isntance;
 	public static SpawnManager Instance
 	{
 		get
@@ -191,7 +41,6 @@ public class SpawnManager : MonoBehaviour
 			return m_Isntance;
 		}
 	}
-
 	private void Awake()
 	{
 		if (m_Isntance == null)
@@ -199,6 +48,7 @@ public class SpawnManager : MonoBehaviour
 		else if (m_Isntance != this)
 			Destroy(gameObject);
 	}
+	#endregion
 
 	public void StartBatter(WaveData wave, bool resetPosition)
 	{
@@ -216,20 +66,25 @@ public class SpawnManager : MonoBehaviour
 		StartCoroutine(IESpawnEnemyGroup(m_tolalgroup));
 	}
 
+	//spawn Enemy Group
 	private IEnumerator IESpawnEnemyGroup(int pgroup)
 	{
 		m_IsSpawningEnemies = true;
 		for (int i = 0; i < pgroup; i++){
+
 			int totalEnemies = Random.Range(m_MinTotalEnemies, m_MaxTotalEnemies);
+
 			EnemyPath path = m_EnemyPath[Random.Range(0, m_EnemyPath.Length)];
 			yield return StartCoroutine(IESpawnEnemy(totalEnemies,path));
+
 			if (i < pgroup - 1)
 				yield return new WaitForSeconds(3f / m_curWave.speedMultiplier);
 		}
 		m_IsSpawningEnemies = false;
 	}
 
-	private IEnumerator IESpawnEnemy(int m_TotalEnemies,EnemyPath path)
+	//spawn Enemy
+	private IEnumerator IESpawnEnemy(int m_TotalEnemies, EnemyPath path)
 	{
 		for (int i = 0; i < m_TotalEnemies; i++)
 		{
@@ -238,7 +93,11 @@ public class SpawnManager : MonoBehaviour
 
 			//dung Instantiate lam ton dung luong memory
 			//EnemyController enemy= Instantiate(m_EnemyPrefabs, null);
-			EnemyController enemy = m_EnemiesPool.spawn(path.WayPoints[0].position, transform);// su dung pool
+
+			// su dung pool
+			EnemyController enemy = m_EnemiesPool.spawn(path.WayPoints[0].position, transform);
+			
+			//khoi tao duong di enemy
 			enemy.Init(path.WayPoints , m_curWave.speedMultiplier);
 		}
 	}
@@ -252,6 +111,7 @@ public class SpawnManager : MonoBehaviour
 	{
 		m_EnemiesPool.release(Enemy);
 	}
+
 	//thay cho destroy EnemyProjectTile
 	public ProjecTileController spawnEnemyProjectTile(Vector3 position)
 	{
@@ -278,6 +138,7 @@ public class SpawnManager : MonoBehaviour
 		m_EnemyProjectTilePool.release(projectile);
 	}
 
+	// spawn HitFX
 	public ParticleFX spawnHitFX(Vector3 position)
 	{
 		ParticleFX fx = m_hitFxPool.spawn(position,transform);
@@ -290,18 +151,20 @@ public class SpawnManager : MonoBehaviour
 		m_hitFxPool.release(obj);
 	}
 
-	public ParticleFX spawnshooterFX(Vector3 position)
+	// spawn ExplosionFXsPlayerPool
+	public ParticleFX spawnExplosionFXsPlayerPool(Vector3 position)
 	{
-		ParticleFX fx = m_shooterFxPool.spawn(position, transform);
-		fx.Setpool(m_shooterFxPool);
+		ParticleFX fx = m_ExplosionFXsPlayerPool.spawn(position, transform);
+		fx.Setpool(m_ExplosionFXsPlayerPool);
 		return fx;
 	}
 
-	public void ReleaseshooterFX(ParticleFX obj)
+	public void ReleaseExplosionFXsPlayerPool(ParticleFX obj)
 	{
-		m_shooterFxPool.release(obj);
+		m_ExplosionFXsPlayerPool.release(obj);
 	}
 
+	// spawn ExplosionFX
 	public ParticleFX spawnExplosionFX(Vector3 position)
 	{
 		ParticleFX fx = m_ExplosionFXsPool.spawn(position, transform);
@@ -321,8 +184,8 @@ public class SpawnManager : MonoBehaviour
 		m_EnemiesPool.Clear();
 		m_EnemyProjectTilePool.Clear();
 		m_PlayerProjectTilePool.Clear();
-		m_shooterFxPool.Clear();
 		m_hitFxPool.Clear();
+		m_ExplosionFXsPool.Clear();
 		m_ExplosionFXsPool.Clear();
 		StopAllCoroutines();// dung cac Coroutines/IEnumerator
 	}

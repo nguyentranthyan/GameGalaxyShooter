@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 206362821}
   - component: {fileID: 206362820}
   m_Layer: 0
-  m_Name: Engine_01_Basic
+  m_Name: ParticleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4852,9 +4852,9 @@ GameObject:
   m_Component:
   - component: {fileID: 9216605867647039832}
   - component: {fileID: 9216605867647039835}
-  - component: {fileID: 9216605867647039833}
   - component: {fileID: 1014869641}
   - component: {fileID: 1014869640}
+  - component: {fileID: 9216605867647039833}
   - component: {fileID: 7463509086210623021}
   m_Layer: 8
   m_Name: Player
@@ -4930,25 +4930,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9216605867647039833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9216605867647039834}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4e4c5e684b37b343947dde701d9eb98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MoveSpeed: 5
-  m_ProjectTile: {fileID: 6257887975840909876, guid: 16dd3a9266e5a274dafc7c2e56e65031, type: 3}
-  m_FiringPoint: {fileID: 9216605866267650424}
-  m_FiringCoolDown: 0.1
-  m_hp: 5
-  m_currentHp: 0
-  m_UseNewInputSystem: 1
 --- !u!50 &1014869641
 Rigidbody2D:
   serializedVersion: 4
@@ -5031,6 +5012,25 @@ PolygonCollider2D:
       - {x: -0.07, y: -0.51}
       - {x: 0.11, y: -0.5}
       - {x: 0.16, y: -0.52}
+--- !u!114 &9216605867647039833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9216605867647039834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e4c5e684b37b343947dde701d9eb98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveSpeed: 5
+  m_ProjectTile: {fileID: 6257887975840909876, guid: 16dd3a9266e5a274dafc7c2e56e65031, type: 3}
+  m_FiringPoint: {fileID: 9216605866267650424}
+  m_FiringCoolDown: 0.2
+  m_hp: 100
+  m_currentHp: 0
+  m_UseNewInputSystem: 1
 --- !u!114 &7463509086210623021
 MonoBehaviour:
   m_ObjectHideFlags: 0

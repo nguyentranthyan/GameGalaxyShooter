@@ -14,7 +14,21 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-	//using singleton
+	private GameState m_gameState;
+
+	//lien ket den cac Script Controller UI
+	[SerializeField] private HomePanelController m_Home;
+	[SerializeField] private GamePlayPanelController m_GamePlay;
+	[SerializeField] private PausePanelController m_Pause;
+	[SerializeField] private GameOverPanelController m_GameOver;
+
+	[SerializeField] private WaveData[] m_Waves;
+	
+	private bool m_win;//check win
+	private int m_score; //score final when you play
+	private int m_curWaveIndex;
+
+	#region singleton
 	private static GameManager m_Isntance;//global variable
 	public static GameManager Instance
 	{
@@ -25,22 +39,6 @@ public class GameManager : MonoBehaviour
 			return m_Isntance;
 		}
 	}
-	//private SpawnManager m_SpawnManager;
-	private AudioManager m_AudioManager;
-	private GameState m_gameState;
-
-	//lien ket den cac Script Controller UI
-	[SerializeField] private HomePanelController m_Home;
-	[SerializeField] private GamePlayPanelController m_GamePlay;
-	[SerializeField] private PausePanelController m_Pause;
-	[SerializeField] private GameOverPanelController m_GameOver;
-	[SerializeField] private WaveData[] m_Waves;
-	[SerializeField] private GameObject m_nextLevel;
-
-	private bool m_win;//check win
-	private int m_score; //score final when you play
-	private int m_curWaveIndex;
-
 	private void Awake()
 	{
 		if (m_Isntance == null)
@@ -48,18 +46,27 @@ public class GameManager : MonoBehaviour
 		else if (m_Isntance != this)
 			Destroy(gameObject);
 	}
+	#endregion
 
 	// Start is called before the first frame update
 	void Start()
     {
-		m_AudioManager = FindObjectOfType<AudioManager>();
-		//m_SpawnManager = FindObjectOfType<SpawnManager>();
+		SetState(GameState.Home);
+	}
+	private void OnEnable()
+	{
 		m_Home.gameObject.SetActive(false);
 		m_GamePlay.gameObject.SetActive(false);
 		m_Pause.gameObject.SetActive(false);
 		m_GameOver.gameObject.SetActive(false);
-		m_nextLevel.SetActive(false);
-		SetState(GameState.Home);
+	}
+
+	private void OnDisable()
+	{
+		m_Home.gameObject.SetActive(false);
+		m_GamePlay.gameObject.SetActive(false);
+		m_Pause.gameObject.SetActive(false);
+		m_GameOver.gameObject.SetActive(false);
 	}
 
 	//setState game show 
@@ -77,9 +84,9 @@ public class GameManager : MonoBehaviour
 			Time.timeScale = 1;
 
 		if (m_gameState == GameState.Home)
-			m_AudioManager.PlayHomeMusic();
+			AudioManager.Instance.PlayHomeMusic();
 		else
-			m_AudioManager.PlaybattleMusic();
+			AudioManager.Instance.PlaybattleMusic();
 	}
 
 	//using Observers giup thong bao score thay doi
@@ -90,28 +97,18 @@ public class GameManager : MonoBehaviour
 		m_score += value;
 		if (onScoreChanged != null)
 			onScoreChanged(m_score);
-		//m_GamePlay.displayScore(m_score);
+	
 		if (SpawnManager.Instance.isClear())
 		{
-			showNextPanel(true);
 			m_curWaveIndex++;
 			if(m_curWaveIndex >= m_Waves.Length)
 				Gameover(true);//You win
 			else
 			{
-				Debug.Log("A");
-				showNextPanel(false);
 				WaveData wave = m_Waves[m_curWaveIndex];
 				SpawnManager.Instance.StartBatter(wave,false);
 			}
 		}
-	}
-	public void showNextPanel(bool show)
-	{
-		if (show==true)
-			m_nextLevel.SetActive(true);
-		else
-			m_nextLevel.SetActive(false);
 	}
 
 	//kiem tra trang thai Active khi player di chuyen
@@ -129,8 +126,6 @@ public class GameManager : MonoBehaviour
 		m_score = 0;
 		if (onScoreChanged != null)
 			onScoreChanged(m_score);
-		//m_GamePlay.displayScore(m_score);
-		
 	}
 	public void Pause()
 	{

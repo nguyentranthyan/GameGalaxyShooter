@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6257887975840909878}
   - component: {fileID: 6257887975840909877}
-  - component: {fileID: 6257887975840909876}
-  - component: {fileID: 3753654796522367176}
   - component: {fileID: 148910011691769435}
+  - component: {fileID: 3753654796522367176}
+  - component: {fileID: 6257887975840909876}
   m_Layer: 8
   m_Name: LazeProjectTile
   m_TagString: Untagged
@@ -85,38 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6257887975840909876
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257887975840909867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d56c87dcc5569f446a9a3f26254bc3f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MoveSpeed: 10
-  m_Direction: {x: 0, y: 1}
-  damage: 1
-  m_SpawnManager: {fileID: 0}
---- !u!70 &3753654796522367176
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6257887975840909867}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.004753709, y: -0.003169179}
-  m_Size: {x: 0.079209924, y: 0.7387178}
-  m_Direction: 0
 --- !u!50 &148910011691769435
 Rigidbody2D:
   serializedVersion: 4
@@ -138,3 +106,34 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!70 &3753654796522367176
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257887975840909867}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.004753709, y: -0.003169179}
+  m_Size: {x: 0.079209924, y: 0.7387178}
+  m_Direction: 0
+--- !u!114 &6257887975840909876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6257887975840909867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d56c87dcc5569f446a9a3f26254bc3f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MoveSpeed: 10
+  m_Direction: {x: 0, y: 1}
+  damage: 10

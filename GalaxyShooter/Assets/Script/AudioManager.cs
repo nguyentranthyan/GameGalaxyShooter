@@ -9,11 +9,32 @@ public class AudioManager : MonoBehaviour
 
 	[SerializeField] private AudioClip m_HomeMusicClip;
 	[SerializeField] private AudioClip m_BattleMusicClip;
-	[SerializeField] private AudioClip m_LazerSFXClip;
-	[SerializeField] private AudioClip m_PlasmaSFXClip;
+	[SerializeField] private AudioClip m_LazerSFXClip; //PlayerProjectTile
+	[SerializeField] private AudioClip m_PlasmaSFXClip; //EnemyProjectTile
 	[SerializeField] private AudioClip m_HitSFXClip;
-	[SerializeField] private AudioClip m_ExplosionSFXClip;
+	[SerializeField] private AudioClip m_ExplosionSFXClip;//playerAndEnemyDestroy
 
+
+	#region singleton
+	[Header("Golbal variables")]
+	private static AudioManager m_Isntance;
+	public static AudioManager Instance
+	{
+		get
+		{
+			if (m_Isntance == null)
+				m_Isntance = FindObjectOfType<AudioManager>();
+			return m_Isntance;
+		}
+	}
+	private void Awake()
+	{
+		if (m_Isntance == null)
+			m_Isntance = this;
+		else if (m_Isntance != this)
+			Destroy(gameObject);
+	}
+	#endregion
 	public void PlayHomeMusic()
 	{
 		if (m_music.clip == m_HomeMusicClip)

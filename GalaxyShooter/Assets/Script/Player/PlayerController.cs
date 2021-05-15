@@ -6,19 +6,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+	[Header("Player's variables")]
 	[SerializeField] private int m_MoveSpeed;
+
+	[Header("ProjectTile's variables")]
 	[SerializeField] private ProjecTileController m_ProjectTile;
 	[SerializeField] private Transform m_FiringPoint;//hướng bắn
 	[SerializeField] private float m_FiringCoolDown;//tốc độ bắn
 	private float m_TempCoolDown;
 
+	[Header("Player's Health variables")]
 	public Action<int, int> onHPChange;
 	[SerializeField] private int m_hp = 5;
 	[SerializeField] private int m_currentHp;
-
-	//private GameManager m_gameManager;
-	//private SpawnManager m_SpawnManager;
-	private AudioManager m_AudioManager;
 
 	//check NewInput
 	[SerializeField] private bool m_UseNewInputSystem;
@@ -84,25 +84,23 @@ public class PlayerController : MonoBehaviour
 		m_currentHp = m_hp;
 		if (onHPChange != null)
 			onHPChange(m_currentHp, m_hp);
-		//m_SpawnManager = FindObjectOfType<SpawnManager>();
-		//m_gameManager = FindObjectOfType<GameManager>();
-		m_AudioManager = FindObjectOfType<AudioManager>();
 	}
 
     // Update is called once per frame
     void Update()
     {
-		//if (!m_gameManager.isActive())
 		if (!GameManager.Instance.isActive())
 			return;
-
+		
 		Vector2 direction=Vector2.zero;
+		//UseInputSystemOld
 		if (!m_UseNewInputSystem)
 		{
 			float horizontal = Input.GetAxis("Horizontal");
 			float vertical = Input.GetAxis("Vertical");
 			//huong di chuyen
 			direction = new Vector2(horizontal, vertical);
+			direction.Normalize();
 			if (Input.GetKey(KeyCode.Space))
 			{
 				if (m_TempCoolDown <= 0)
@@ -114,7 +112,9 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
+			//UseInputSystemNew
 			direction = m_MovementInputValue;
+			direction.Normalize();
 			if (m_AttackInputValue)
 			{
 				if (m_TempCoolDown <= 0)
@@ -129,14 +129,12 @@ public class PlayerController : MonoBehaviour
 		m_TempCoolDown -= Time.deltaTime;
 	}
 
+	//khoi tao đạn
 	private void Fire()
 	{
-		//khoi tao đạn
-		//ProjecTileController projectile =Instantiate(m_ProjectTile, m_FiringPoint.position, Quaternion.identity, null);
 		ProjecTileController projectile = SpawnManager.Instance.spawnPlayerProjectTile(m_FiringPoint.position);
-		SpawnManager.Instance.spawnshooterFX(m_FiringPoint.position);
 		projectile.Fire(1);
-		m_AudioManager.PlayLazerSFXClip();
+		AudioManager.Instance.PlayLazerSFXClip();
 	}
 
 	//mat mau khi va cham 
@@ -150,21 +148,12 @@ public class PlayerController : MonoBehaviour
 		{
 			Destroy(gameObject);
 			//player bi pha huy
-			SpawnManager.Instance.spawnExplosionFX(transform.position);
-			//m_gameManager.Gameover(false);
+			SpawnManager.Instance.spawnExplosionFXsPlayerPool(transform.position);
 			//using singleton
 			GameManager.Instance.Gameover(false); //gameover
-			m_AudioManager.PlayExplosionSFXClip();
+			AudioManager.Instance.PlayExplosionSFXClip();
 		}
 		//player bi va cham
-		m_AudioManager.PlayHitSFXClip();
-	}
-
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (collision.collider.CompareTag("Wall"))
-		{
-
-		}
+		AudioManager.Instance.PlayHitSFXClip();
 	}
 }

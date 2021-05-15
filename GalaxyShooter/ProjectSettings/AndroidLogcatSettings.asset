@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "H9AXB7725642GZV",
     "m_SelectedPackage": {
-        "deviceId": "H9AXB7725642GZV",
-        "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 13542,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -18,6 +18,12 @@
             "deviceId": "H9AXB7725642GZV",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 13542,
+            "exited": true
+        },
+        {
+            "deviceId": "H9AXB7725642GZV",
+            "name": "com.asus.launcher",
+            "processId": 4386,
             "exited": false
         }
     ],
@@ -57,7 +63,7 @@
         "MemoryWindowHeight": 300.0,
         "MemoryWindowWidth": 170.0,
         "MemoryTypeEnabled": [
-            true,
+            false,
             true,
             true,
             true,

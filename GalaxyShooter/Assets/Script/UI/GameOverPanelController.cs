@@ -5,20 +5,12 @@ using TMPro;
 
 public class GameOverPanelController : MonoBehaviour
 {
-	//private GameManager m_gameManager;
-
+	
 	[SerializeField] private TextMeshProUGUI m_textResult;
 	[SerializeField] private TextMeshProUGUI m_txtHighScore;
 
-	// Start is called before the first frame update
-	void Start()
-    {
-		//m_gameManager = FindObjectOfType<GameManager>();
-	}
-
 	public void BtnHome_pressed()
 	{
-		//m_gameManager.Home();
 		GameManager.Instance.Home();
 	}
 

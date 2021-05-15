@@ -7,6 +7,7 @@ public class BackgroundController : MonoBehaviour
 	[SerializeField] private Material m_bigstart;
 	[SerializeField] private Material m_medstart;
 	[SerializeField] private Material m_nebular;
+	[Header("BG's Scollspeed variables")]
 	[SerializeField] private float m_bigstartScollspeed;
 	[SerializeField] private float m_medstartScollspeed;
 	[SerializeField] private float m_nebulaScollspeed;

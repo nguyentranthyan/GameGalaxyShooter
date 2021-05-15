@@ -206,17 +206,17 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         UnityEngine.Object.Destroy(asset);
     }
 
-    //public InputBinding? bindingMask
-    //{
-    //    get => asset.bindingMask;
-    //    set => asset.bindingMask = value;
-    //}
+    public InputBinding? bindingMask
+    {
+        get => asset.bindingMask;
+        set => asset.bindingMask = value;
+    }
 
-    //public ReadOnlyArray<InputDevice>? devices
-    //{
-    //    get => asset.devices;
-    //    set => asset.devices = value;
-    //}
+    public ReadOnlyArray<InputDevice>? devices
+    {
+        get => asset.devices;
+        set => asset.devices = value;
+    }
 
     public ReadOnlyArray<InputControlScheme> controlSchemes => asset.controlSchemes;
 
@@ -285,34 +285,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-
-	public InputBinding? bindingMask
-	{
-		get
-		{
-			throw new NotImplementedException();
-		}
-
-		set
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public ReadOnlyArray<InputDevice>? devices
-	{
-		get
-		{
-			throw new NotImplementedException();
-		}
-
-		set
-		{
-			throw new NotImplementedException();
-		}
-	}
-
-	public interface IPlayerActions
+    public interface IPlayerActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
