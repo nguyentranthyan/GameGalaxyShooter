@@ -60,9 +60,21 @@ public class ProjecTileController : MonoBehaviour
 			PlayerController player;
 			//tim player controller script
 			collision.gameObject.TryGetComponent(out player);
-			player.hit(damage);
-			Vector3 hitpos = collision.ClosestPoint(transform.position);
-			SpawnManager.Instance.spawnHitFX(hitpos);
+			
+			if (player.haveShield)
+			{
+				// have Shield
+				player.shield.SetActive(true);
+				player.haveShield = true;
+				return;
+			}
+			else
+			{
+				// haven't Shield
+				player.hit(damage);
+				Vector3 hitpos = collision.ClosestPoint(transform.position);
+				SpawnManager.Instance.spawnHitFX(hitpos);
+			}
 		}
 	}
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8535649710163342256}
   - component: {fileID: -8034151400923697433}
   m_Layer: 0
-  m_Name: ExploxerSFXPlayer
+  m_Name: ShieldParticleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

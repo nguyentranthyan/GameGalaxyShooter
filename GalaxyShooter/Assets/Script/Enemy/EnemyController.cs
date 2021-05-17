@@ -58,6 +58,7 @@ public class EnemyController : MonoBehaviour
 			Fire();
 			m_TempCoolDown = Random.Range(m_MinFiringCoolDown,m_MaxFiringCoolDown);
 		}
+		
 		m_TempCoolDown -= Time.deltaTime;
 	}
 

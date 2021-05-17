@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PausePanelController : MonoBehaviour
 {
-	public void BtnHome_pressed()
+	public void BtnQuit_pressed()
 	{
 		GameManager.Instance.Home();
 	}

@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField] private EnemiesPool m_EnemiesPool;
 	[SerializeField] private ProjectTilePool m_EnemyProjectTilePool;
 	[SerializeField] private ProjectTilePool m_PlayerProjectTilePool;
+	[SerializeField] private PowerPool m_PowerUpPool;
 	[SerializeField] private ParticleFXPool m_hitFxPool;
 	[SerializeField] private ParticleFXPool m_ExplosionFXsPlayerPool;
 	[SerializeField] private ParticleFXPool m_ExplosionFXsPool;
@@ -60,11 +61,28 @@ public class SpawnManager : MonoBehaviour
 
 		//check khoi tao player
 		if (m_Player == null)
+		{
 			m_Player = Instantiate(m_PlayerControllerPrefabs);//khoi tao player
-		if(resetPosition)
+			m_Player.shield.SetActive(false);
+		}
+
+		if (m_Player != null && resetPosition)
+		{
 			m_Player.transform.position = Vector3.zero;
+			m_Player.shield.SetActive(false);
+		}
+			
 		StartCoroutine(IESpawnEnemyGroup(m_tolalgroup));
+		StartCoroutine(IESpawnPowerUp(3f));
 	}
+
+
+	private IEnumerator IESpawnPowerUp(float timeDelay)
+	{
+		yield return new WaitForSeconds(timeDelay);
+		spawnPowerUp(transform.position);
+	}
+
 
 	//spawn Enemy Group
 	private IEnumerator IESpawnEnemyGroup(int pgroup)
@@ -120,9 +138,22 @@ public class SpawnManager : MonoBehaviour
 		return obj;
 	}
 
+	
 	public void ReleaseEnemyProjectTile(ProjecTileController projectile)
 	{
 		m_EnemyProjectTilePool.release(projectile);
+	}
+
+	//thay cho destroy PowerUp
+	public PowerUp spawnPowerUp(Vector3 position)
+	{
+		PowerUp obj = m_PowerUpPool.spawn(position, transform);
+		return obj;
+	}
+
+	public void ReleasePowerUp(PowerUp powerUp)
+	{
+		m_PowerUpPool.release(powerUp);
 	}
 
 	//thay cho destroy PlayerProjectTile
@@ -151,19 +182,6 @@ public class SpawnManager : MonoBehaviour
 		m_hitFxPool.release(obj);
 	}
 
-	// spawn ExplosionFXsPlayerPool
-	public ParticleFX spawnExplosionFXsPlayerPool(Vector3 position)
-	{
-		ParticleFX fx = m_ExplosionFXsPlayerPool.spawn(position, transform);
-		fx.Setpool(m_ExplosionFXsPlayerPool);
-		return fx;
-	}
-
-	public void ReleaseExplosionFXsPlayerPool(ParticleFX obj)
-	{
-		m_ExplosionFXsPlayerPool.release(obj);
-	}
-
 	// spawn ExplosionFX
 	public ParticleFX spawnExplosionFX(Vector3 position)
 	{
@@ -184,6 +202,7 @@ public class SpawnManager : MonoBehaviour
 		m_EnemiesPool.Clear();
 		m_EnemyProjectTilePool.Clear();
 		m_PlayerProjectTilePool.Clear();
+		m_PowerUpPool.Clear();
 		m_hitFxPool.Clear();
 		m_ExplosionFXsPool.Clear();
 		m_ExplosionFXsPool.Clear();

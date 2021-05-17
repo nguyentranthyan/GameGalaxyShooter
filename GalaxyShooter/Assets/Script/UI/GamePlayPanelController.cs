@@ -26,8 +26,8 @@ public class GamePlayPanelController : MonoBehaviour
 
 	private void OnDisable()
 	{
-		GameManager.Instance.onScoreChanged += onScoreChanged;
-		SpawnManager.Instance.m_Player.onHPChange += onHPChange;	
+		GameManager.Instance.onScoreChanged -= onScoreChanged;
+		SpawnManager.Instance.m_Player.onHPChange -= onHPChange;	
 	}
 
 	//update score when change
