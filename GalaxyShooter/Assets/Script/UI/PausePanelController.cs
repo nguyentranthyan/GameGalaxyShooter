@@ -6,7 +6,7 @@ public class PausePanelController : MonoBehaviour
 {
 	public void BtnQuit_pressed()
 	{
-		GameManager.Instance.Home();
+		Application.Quit();
 	}
 	public void BtnResume_pressed()
 	{	

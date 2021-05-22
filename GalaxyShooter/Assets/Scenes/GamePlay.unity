@@ -704,6 +704,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_music: {fileID: 313189446}
   m_SFX: {fileID: 123667230}
+  m_VolumeSlider: {fileID: 0}
   m_HomeMusicClip: {fileID: 8300000, guid: 816b6eab58d24c646a55f35fb63b0f1f, type: 3}
   m_BattleMusicClip: {fileID: 8300000, guid: 9113a8a90b5a5ca42a7d9af05d6cf620, type: 3}
   m_LazerSFXClip: {fileID: 8300000, guid: 1dc924ea527d71c40a0f12f132a0fe6e, type: 3}

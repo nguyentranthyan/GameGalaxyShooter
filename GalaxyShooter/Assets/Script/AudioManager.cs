@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
 	[SerializeField] private AudioSource m_music;
 	[SerializeField] private AudioSource m_SFX;
+	[SerializeField] private Slider m_VolumeSlider;
 
 	[SerializeField] private AudioClip m_HomeMusicClip;
 	[SerializeField] private AudioClip m_BattleMusicClip;
@@ -13,6 +14,7 @@ public class AudioManager : MonoBehaviour
 	[SerializeField] private AudioClip m_PlasmaSFXClip; //EnemyProjectTile
 	[SerializeField] private AudioClip m_HitSFXClip;
 	[SerializeField] private AudioClip m_ExplosionSFXClip;//playerAndEnemyDestroy
+
 
 
 	#region singleton

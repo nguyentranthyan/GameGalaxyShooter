@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
 
 	[Header("Player's Health variables")]
 	public Action<int, int> onHPChange;
-	[SerializeField] private int m_hp;
-	[SerializeField] private int m_currentHp;
+	public int m_hp;
+	public int m_currentHp;
 
 	//check NewInput
 	[SerializeField] private bool m_UseNewInputSystem;
@@ -93,7 +93,6 @@ public class PlayerController : MonoBehaviour
     {
 		m_currentHp = m_hp;
 		onHPChange?.Invoke(m_currentHp, m_hp);
-
 	}
 	// Update is called once per frame
 	void FixedUpdate()
