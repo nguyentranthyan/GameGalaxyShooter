@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "H9AXB7725642GZV",
         "name": "com.StartUp.GalaxyShooter",
-        "processId": 26662,
+        "processId": 16429,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -30,6 +30,12 @@
             "deviceId": "H9AXB7725642GZV",
             "name": "com.StartUp.GalaxyShooter",
             "processId": 26662,
+            "exited": false
+        },
+        {
+            "deviceId": "H9AXB7725642GZV",
+            "name": "com.StartUp.GalaxyShooter",
+            "processId": 16429,
             "exited": false
         }
     ],
