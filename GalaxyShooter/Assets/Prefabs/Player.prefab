@@ -5183,13 +5183,13 @@ MonoBehaviour:
   m_FiringPoint1: {fileID: 2022358935065476254}
   m_FiringPoint2: {fileID: 8055620796149023287}
   m_FiringCoolDown: 0.2
+  m_JoystickchangeMove: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
   canTripleshoot: 0
   canSpeedShooter: 0
   shield: {fileID: 6533440247376635726}
   haveShield: 0
   m_hp: 100
   m_currentHp: 0
-  m_UseNewInputSystem: 1
 --- !u!114 &7463509086210623021
 MonoBehaviour:
   m_ObjectHideFlags: 0

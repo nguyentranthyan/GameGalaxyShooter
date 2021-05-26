@@ -10,7 +10,6 @@ public class GamePlayPanelController : MonoBehaviour
 	
 	[SerializeField] private TextMeshProUGUI m_txtScore;
 	[SerializeField] private Image m_ImgHPBar;
-	[SerializeField] private Text m_TextHPBar;
 
 	private void OnEnable()
 	{
@@ -21,7 +20,6 @@ public class GamePlayPanelController : MonoBehaviour
 	private void onHPChange(int curHp, int maxHp)
 	{
 		m_ImgHPBar.fillAmount = curHp * 1f / maxHp;
-		m_TextHPBar.text = curHp.ToString()+"/100";
 	}
 
 	private void OnDisable()

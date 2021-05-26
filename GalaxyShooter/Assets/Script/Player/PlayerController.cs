@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private Transform m_FiringPoint2;//hướng bắn phải
 	[SerializeField] private float m_FiringCoolDown;//tốc độ bắn
 	private float m_TempCoolDown;
+	private Vector2 m_ChangeMove;
 
 	//PowerUp
 	public bool canTripleshoot=false;
@@ -28,65 +29,7 @@ public class PlayerController : MonoBehaviour
 	public Action<int, int> onHPChange;
 	public int m_hp;
 	public int m_currentHp;
-
-	//check NewInput
-	[SerializeField] private bool m_UseNewInputSystem;
-	private PlayerInput m_PlayerInput;
-	private Vector2 m_MovementInputValue;
-	private bool m_AttackInputValue;
 	private PowerUp powerUp;
-
-	private void OnEnable()
-	{
-		if (m_PlayerInput == null)
-		{
-			m_PlayerInput = new PlayerInput();
-			m_PlayerInput.Player.Movement.started += OnMovement;
-			m_PlayerInput.Player.Movement.started += OnMovement;
-			m_PlayerInput.Player.Movement.started += OnMovement;
-			m_PlayerInput.Player.Attack.started += OnAttack;
-			m_PlayerInput.Player.Attack.started += OnAttack;
-			m_PlayerInput.Player.Attack.started += OnAttack;
-			m_PlayerInput.Enable();
-		}
-	}
-
-	private void OnDisable()
-	{
-		m_PlayerInput.Disable();
-	}
-
-	private void OnAttack(InputAction.CallbackContext obj)
-	{
-		if (obj.started)
-		{
-			m_AttackInputValue = true;
-		}
-		else if (obj.performed)
-		{
-			m_AttackInputValue = true;
-		}
-		else if (obj.canceled)
-		{
-			m_AttackInputValue = false;
-		}
-	}
-
-	private void OnMovement(InputAction.CallbackContext obj)
-	{
-		if (obj.started)
-		{
-			m_MovementInputValue = obj.ReadValue<Vector2>();
-		}
-		else if (obj.performed)
-		{
-			m_MovementInputValue = obj.ReadValue<Vector2>();
-		}
-		else if (obj.canceled)
-		{
-			m_MovementInputValue = Vector2.zero;
-		}
-	}
 
 	// Start is called before the first frame update
 	void Start()
@@ -107,55 +50,29 @@ public class PlayerController : MonoBehaviour
 		{
 			m_MoveSpeed = 5.0f;
 		}
+		float horizontal = CrossPlatformInputManager.GetAxis("Horizontal");
+		float vertical = CrossPlatformInputManager.GetAxis("Vertical");
+		//huong di chuyen
+		m_ChangeMove = new Vector2(horizontal, vertical);
 
-		Vector2 direction=Vector2.zero;
-		//UseInputSystemOld
-		if (!m_UseNewInputSystem)
+		m_ChangeMove.Normalize();
+		//}
+		if (Input.GetMouseButton(0))
 		{
-			float horizontal = Input.GetAxis("Horizontal");
-			float vertical = Input.GetAxis("Vertical");
-			//huong di chuyen
-			direction = new Vector2(horizontal, vertical);
-			direction.Normalize();
-			if (Input.GetKey(KeyCode.Space))
+			if (m_TempCoolDown <= 0)
 			{
-				if (m_TempCoolDown <= 0)
+				if (canTripleshoot == true)
 				{
-					if (canTripleshoot == true)
-					{
-						Fire();
-					}
-					else
-					{
-						Fire();
-					}
-					m_TempCoolDown = m_FiringCoolDown;
+					Fire();
 				}
+				else
+				{
+					Fire();
+				}
+				m_TempCoolDown = m_FiringCoolDown;
 			}
 		}
-		else
-		{
-			//UseInputSystemNew
-			direction = m_MovementInputValue;
-			direction.Normalize();
-			if (m_AttackInputValue)
-			{
-				if (m_TempCoolDown <= 0)
-				{
-					if (canTripleshoot == true)
-					{
-						Fire();
-					}
-					else
-					{
-						Fire();
-					}
-					m_TempCoolDown = m_FiringCoolDown;
-				}
-			}
-		}
-	
-		transform.Translate(direction * Time.deltaTime * m_MoveSpeed);
+		transform.Translate(m_ChangeMove * Time.deltaTime * m_MoveSpeed);
 		m_TempCoolDown -= Time.deltaTime;
 	}
 	//khởi tạo đạn

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 //tao enum quan ly state machine cua game
 public enum GameState
@@ -23,7 +24,10 @@ public class GameManager : MonoBehaviour
 	[SerializeField] private GameOverPanelController m_GameOver;
 
 	[SerializeField] private WaveData[] m_Waves;
-	
+	public GameObject nextLevel;
+	public Text nextLevelText;
+	public int numberLevel;
+
 	private bool m_win;//check win
 	private int m_score; //score final when you play
 	private int m_curWaveIndex;
@@ -52,6 +56,7 @@ public class GameManager : MonoBehaviour
 	void Start()
     {
 		SetState(GameState.Home);
+		numberLevel = 1;
 	}
 	private void OnEnable()
 	{
@@ -78,6 +83,8 @@ public class GameManager : MonoBehaviour
 		m_Pause.gameObject.SetActive(m_gameState == GameState.Pause);
 		m_GameOver.gameObject.SetActive(m_gameState == GameState.GameOver);
 
+		StartCoroutine(NextLevel(numberLevel));
+
 		if (m_gameState == GameState.Pause)
 			Time.timeScale = 0;
 		else
@@ -101,14 +108,28 @@ public class GameManager : MonoBehaviour
 		if (SpawnManager.Instance.isClear())
 		{
 			m_curWaveIndex++;
-			if(m_curWaveIndex >= m_Waves.Length)
+			if (m_curWaveIndex >= m_Waves.Length)
+			{
+				numberLevel = 1;
+				Destroy(SpawnManager.Instance.m_Player.gameObject);
 				Gameover(true);//You win
+			}
 			else
 			{
+				numberLevel += 1;
+				StartCoroutine(NextLevel(numberLevel));
 				WaveData wave = m_Waves[m_curWaveIndex];
 				SpawnManager.Instance.StartBatter(wave,false);
 			}
 		}
+	}
+
+	public IEnumerator NextLevel(int numberLevel)
+	{
+		nextLevel.SetActive(true);
+		nextLevelText.text = "Level " + numberLevel;
+		yield return new WaitForSeconds(3f);
+		nextLevel.SetActive(false);
 	}
 
 	//kiem tra trang thai Active khi player di chuyen
