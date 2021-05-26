@@ -140,7 +140,10 @@ public class GameManager : MonoBehaviour
 	{
 		SetState(GameState.GamePlay);
 	}
-
+	public void BtnQuit_pressed()
+	{
+		Application.Quit();
+	}
 	public void Gameover(bool win)
 	{
 		int curHighScore = PlayerPrefs.GetInt("HighScore");

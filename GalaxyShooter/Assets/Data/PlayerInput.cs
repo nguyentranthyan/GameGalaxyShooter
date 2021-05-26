@@ -105,7 +105,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""cdb7bb8f-99e0-413d-b777-0432703d21dd"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Joystick>/stick/up"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -116,7 +116,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""eb1d168c-68b2-420c-8917-79892d15cc2a"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Joystick>/stick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -127,7 +127,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""90766209-46ea-447c-925d-4d58cf6fbc2d"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Joystick>/stick/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -138,7 +138,7 @@ public class @PlayerInput : IInputActionCollection, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""fd57141e-9944-4716-bbe4-a04bb25ef5ce"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Joystick>/stick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
